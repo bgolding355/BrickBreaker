@@ -21,10 +21,8 @@ public class MainWindow extends Canvas {
 		//Setting Settings
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null); //Puts in center of the screen
-		frame.setVisible(true);
-	
 		frame.add(pGame);
-		pGame.start();
-
+		
+		frame.setVisible(true);
 	}
 }

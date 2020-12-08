@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.util.Arrays;
 
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 6307620746112193723L;
@@ -18,6 +19,7 @@ public class Game extends Canvas implements Runnable {
 	public Game() {
 		aThread = new Thread();
 		aWindow = new MainWindow(WIDTH, HEIGHT, GAME_HEADER, this);
+		this.start();
 	}
 
 	public synchronized void start() {
@@ -50,9 +52,8 @@ public class Game extends Canvas implements Runnable {
 			this.createBufferStrategy(3);
 		} else {
 			Graphics graph = bs.getDrawGraphics();
-			graph.setColor(Color.BLACK);
+			graph.setColor(Color.black);
 			graph.fillRect(0, 0, WIDTH, HEIGHT);
-			
 			graph.dispose();
 			bs.show();
 		}
