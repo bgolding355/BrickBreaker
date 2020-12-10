@@ -5,10 +5,10 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
-public class MainWindow extends Canvas {
+public class Window extends Canvas {
 	private static final long serialVersionUID = 6596273530124848110L;
-
-	public MainWindow(int pWidth, int pHeight, String pTitle, Game pGame) {
+	
+	public static void setup(int pWidth, int pHeight, String pTitle, Game pGame) {
 		JFrame frame = new JFrame(pTitle);
 		
 		//Setting dimensions

@@ -13,13 +13,21 @@ public class Game extends Canvas implements Runnable {
 	private static final String GAME_HEADER = "Some Game";
 
 	private Thread aThread; // Single threaded game
-	private MainWindow aWindow;
 	private boolean isRunning = false;
 
-	public Game() {
+	private Game() {
 		aThread = new Thread();
-		aWindow = new MainWindow(WIDTH, HEIGHT, GAME_HEADER, this);
+		Window.setup(WIDTH, HEIGHT, GAME_HEADER, this);
+		gameSetup();
 		this.start();
+	}
+
+	/**
+	 * Helper method which sets up game
+	 */
+	private void gameSetup() {
+		GameObjectObserver.add(new Player(20,20,null));
+		
 	}
 
 	public synchronized void start() {
@@ -36,16 +44,10 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
 
-	/**
-	 * Helper method for run
-	 */
 	private void tick() {
-		
+		GameObjectObserver.tick();
 	}
 	
-	/** 
-	 * Helper method for run
-	 */
 	private void render() {	
 		BufferStrategy bs = this.getBufferStrategy();
 		if (bs == null) {
@@ -54,6 +56,9 @@ public class Game extends Canvas implements Runnable {
 			Graphics graph = bs.getDrawGraphics();
 			graph.setColor(Color.black);
 			graph.fillRect(0, 0, WIDTH, HEIGHT);
+			
+			GameObjectObserver.render(graph);
+			
 			graph.dispose();
 			bs.show();
 		}
@@ -91,6 +96,10 @@ public class Game extends Canvas implements Runnable {
 			}
 		}
 		stop();
-
+	}
+	
+	public static void main(String[] args) {
+		Game game = new Game();
+		game.run();
 	}
 }
