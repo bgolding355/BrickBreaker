@@ -17,6 +17,7 @@ public class Game extends Canvas implements Runnable {
 
 	private Game() {
 		aThread = new Thread();
+		this.addKeyListener(new KeyInput());
 		Window.setup(WIDTH, HEIGHT, GAME_HEADER, this);
 		gameSetup();
 		this.start();
@@ -25,9 +26,9 @@ public class Game extends Canvas implements Runnable {
 	/**
 	 * Helper method which sets up game
 	 */
-	private void gameSetup() {
-		GameObjectObserver.add(new Player(20,20,null));
-		
+	private void gameSetup(){
+		GameObjectObserver.add(new Player(0,50,null));
+		GameObjectObserver.add(new Player(100,100,null));
 	}
 
 	public synchronized void start() {

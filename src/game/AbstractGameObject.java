@@ -1,14 +1,16 @@
 package game;
 
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 
 abstract class AbstractGameObject {
-	public static enum ObjType {
-		PLAYER, ENEMY
-	}
-	
 	protected int x, y, velX, velY;
 	protected ObjType aType;
+	
+	public enum ObjType {
+		PLAYER,
+		ENEMY
+	}
 	
 	/**
 	 * @pre pX > 0 && pY > 0 && aType != null
@@ -16,8 +18,11 @@ abstract class AbstractGameObject {
 	 * @param pY y co-ordinate
 	 * @param aType type of this
 	 */
-	public AbstractGameObject(int pX, int pY, ObjType aType) {
+	public AbstractGameObject(int pX, int pY, ObjType pType) {
 		assert pX > 0 && pY > 0 && aType != null;
+		this.x = pX;
+		this.y = pY;
+		this.aType = pType;
 	}
 	
 	/**
@@ -32,4 +37,17 @@ abstract class AbstractGameObject {
 	 */
 	public abstract void render(Graphics pGraphics);
 	
+	/**
+	 * Performs pEvent on this
+	 * 
+	 * @pre pEvent != null
+	 * @param pEvent event which occurred
+	 */
+	public abstract void keyPressEvent(KeyEvent pEvent);
+
+	/**
+	 * @pre pEvent != null
+	 * @param pEvent event which occurred
+	 */
+	public abstract void keyReleaseEvent(KeyEvent pEvent);
 }
