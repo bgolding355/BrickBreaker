@@ -8,8 +8,8 @@ import java.util.Arrays;
 
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 6307620746112193723L;
-	private static final int WIDTH = 640;
-	private static final int HEIGHT = 480;
+	protected static final int WIDTH = 640;
+	protected static final int HEIGHT = 480;
 	private static final String GAME_HEADER = "Some Game";
 
 	private Thread aThread; // Single threaded game
@@ -27,8 +27,8 @@ public class Game extends Canvas implements Runnable {
 	 * Helper method which sets up game
 	 */
 	private void gameSetup(){
-		GameObjectObserver.add(new Player(0,50,null));
-		GameObjectObserver.add(new Player(100,100,null));
+		GameObjectObserver.add(new Player(WIDTH/2,HEIGHT-42, AbstractGameObject.ObjType.PLAYER));
+		GameObjectObserver.add(new BasicEnemy(100,100,AbstractGameObject.ObjType.BASIC_ENEMY));
 	}
 
 	public synchronized void start() {
@@ -47,6 +47,23 @@ public class Game extends Canvas implements Runnable {
 
 	private void tick() {
 		GameObjectObserver.tick();
+	}
+	
+	/**
+	 * returns pValue bounded by [min,max]
+	 * @param pValue value to be bounded
+	 * @param min minimum bound
+	 * @param max maximum bound
+	 * @return value in [min, max]
+	 */
+	protected static int bound(int pValue, int min, int max) {
+		if (pValue > max) {
+			return max;
+		} else if (pValue < min) {
+			return min;
+		} else {
+			return pValue;
+		}
 	}
 	
 	private void render() {	
@@ -91,7 +108,7 @@ public class Game extends Canvas implements Runnable {
 			frames++;
 
 			if (System.currentTimeMillis() - timer > 1000) {
-				System.out.println(String.format("FPS: %d", frames));
+//				System.out.println(String.format("FPS: %d", frames));
 				timer += 1000;
 				frames = 0;
 			}

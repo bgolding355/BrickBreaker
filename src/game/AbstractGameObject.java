@@ -9,7 +9,7 @@ abstract class AbstractGameObject {
 	
 	public enum ObjType {
 		PLAYER,
-		ENEMY
+		BASIC_ENEMY
 	}
 	
 	/**
