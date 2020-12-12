@@ -1,28 +1,39 @@
 package game;
 
-import java.util.LinkedList;
-
 /**
  * Handles all collisions not resulting from KeyPress/KeyRelease's
  */
 public enum Collisions {
-	PLAYER_BALL {
+	BALL_BRICK {
 		@Override
 		void action() {
+			for (GameObject ball : Observer.getByObjType(GameObject.ObjType.BALL)) {
+				for (GameObject brick : Observer.getByObjType(GameObject.ObjType.BRICK)) {
+					if (ball.getBounds().intersects(brick.getBounds())) {
+						ball.velY *= -1;
+						Observer.remove(brick);
+					}
+				}
+			}
+		}
+	},
 
-			LinkedList<AbstractGameObject> balls = GameObjectObserver.getByObjType(AbstractGameObject.ObjType.BALL);
-			LinkedList<AbstractGameObject> players = GameObjectObserver.getByObjType(AbstractGameObject.ObjType.PLAYER);
-
-			doesCollide(players, balls).forEach(ball -> {
-				ball.velY *= -1;
-			});
+	BALL_PLAYER {
+		@Override
+		void action() {			
+			for (GameObject ball : Observer.getByObjType(GameObject.ObjType.BALL)) {
+				for (GameObject player : Observer.getByObjType(GameObject.ObjType.PLAYER)) {
+					if (ball.getBounds().intersects(player.getBounds())) {
+						ball.velY *= -1;
+					}
+				}
+			}
 		}
 	},
 	BALL_FLOOR {
 		@Override
 		void action() {
-			if (GameObjectObserver.getByObjType(AbstractGameObject.ObjType.BALL).stream()
-					.anyMatch(ball -> ball.y >= Game.HEIGHT - 32)) {
+			if (Observer.getByObjType(GameObject.ObjType.BALL).stream().anyMatch(ball -> ball.y >= Game.HEIGHT - 32)) {
 				System.out.println("Ball Collided with Floor");
 			}
 		}
@@ -30,9 +41,11 @@ public enum Collisions {
 	BALL_SIDES_OR_ROOF {
 		@Override
 		void action() {
-			GameObjectObserver.getByObjType(AbstractGameObject.ObjType.BALL).forEach(ball -> {
-				if (ball.y <= 0 || ball.y>=Game.HEIGHT - 32) ball.velY *= -1;
-				if (ball.x <= 0 || ball.x>=Game.WIDTH - 32) ball.velX *= -1;
+			Observer.getByObjType(GameObject.ObjType.BALL).forEach(ball -> {
+				if (ball.y <= 0 || ball.y >= Game.HEIGHT - 32)
+					ball.velY *= -1;
+				if (ball.x <= 0 || ball.x >= Game.WIDTH - 32)
+					ball.velX *= -1;
 			});
 		}
 	};
@@ -41,26 +54,6 @@ public enum Collisions {
 	 * Checks if collision occurred, then performs some action if it did
 	 */
 	abstract void action();
-
-	/**
-	 * Detecting if two LinkedList's collide
-	 * 
-	 * @param list1 the 1rst LinkedList
-	 * @param list2 the 2nd LinkedList
-	 * @return LinkedList<AbstractGameObject> of objects in list2 which collided
-	 */
-	private static LinkedList<AbstractGameObject> doesCollide(LinkedList<AbstractGameObject> list1,
-			LinkedList<AbstractGameObject> list2) {
-		LinkedList<AbstractGameObject> toReturn = new LinkedList<AbstractGameObject>();
-		for (AbstractGameObject i : list1) {
-			for (AbstractGameObject j : list2) {
-				if (i.getBounds().intersects(j.getBounds())) {
-					toReturn.add(j);
-				}
-			}
-		}
-		return toReturn;
-	}
 
 	/**
 	 * Performs all action()'s

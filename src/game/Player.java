@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-public class Player extends AbstractGameObject {
+public class Player extends GameObject {
 	private static final int PLAYER_WIDTH = 64;
 	private static final int PLAYER_HEIGHT = 12;
 	private static final int MAX_VELOCITY = 10;

@@ -4,14 +4,15 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
-abstract class AbstractGameObject {
+abstract class GameObject {
 	protected int x, y, velX, velY;
 	protected ObjType aType;
 	protected int aWidth, aHeight;
 	
 	public enum ObjType {
 		PLAYER,
-		BALL
+		BALL,
+		BRICK
 	}
 	
 	/**
@@ -20,7 +21,7 @@ abstract class AbstractGameObject {
 	 * @param pY y co-ordinate
 	 * @param aType type of this
 	 */
-	public AbstractGameObject(int pX, int pY, ObjType pType) {
+	public GameObject(int pX, int pY, ObjType pType) {
 		assert pX > 0 && pY > 0 && aType != null;
 		this.x = pX;
 		this.y = pY;

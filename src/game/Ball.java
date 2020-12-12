@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
-public class Ball extends AbstractGameObject{
+public class Ball extends GameObject{
 	
 	private static final int BALL_DIAMETER = 20;
 	private static final int BALL_SPEED = 5;

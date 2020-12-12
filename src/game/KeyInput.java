@@ -7,11 +7,11 @@ public class KeyInput extends KeyAdapter  {
 	
 	@Override
 	public void keyPressed(KeyEvent pEvent) {
-		GameObjectObserver.keyPressEvent(pEvent);
+		Observer.keyPressEvent(pEvent);
 	}
 	
 	@Override
 	public void keyReleased(KeyEvent pEvent) {
-		GameObjectObserver.keyReleaseEvent(pEvent); 
+		Observer.keyReleaseEvent(pEvent); 
 	}
  }

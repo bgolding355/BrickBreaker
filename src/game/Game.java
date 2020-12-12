@@ -27,8 +27,9 @@ public class Game extends Canvas implements Runnable {
 	 * Helper method which sets up game
 	 */
 	private void gameSetup(){
-		GameObjectObserver.add(new Player(WIDTH/2,HEIGHT-42, AbstractGameObject.ObjType.PLAYER));
-		GameObjectObserver.add(new Ball(100,100,AbstractGameObject.ObjType.BALL));
+		Observer.add(new Player(WIDTH/2,HEIGHT-42, GameObject.ObjType.PLAYER));
+		Observer.add(new Ball(WIDTH/2,HEIGHT/2,GameObject.ObjType.BALL));
+		Brick.populateWithBricks(4);
 	}
 
 	public synchronized void start() {
@@ -46,7 +47,7 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	private void tick() {
-		GameObjectObserver.tick();
+		Observer.tick();
 	}
 	
 	/**
@@ -75,7 +76,7 @@ public class Game extends Canvas implements Runnable {
 			graph.setColor(Color.black);
 			graph.fillRect(0, 0, WIDTH, HEIGHT);
 			
-			GameObjectObserver.render(graph);
+			Observer.render(graph);
 			
 			graph.dispose();
 			bs.show();

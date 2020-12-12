@@ -6,8 +6,8 @@ import java.util.LinkedList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class GameObjectObserver  {
-	private static LinkedList<AbstractGameObject> aObserved = new LinkedList<AbstractGameObject>();
+public class Observer  {
+	private static LinkedList<GameObject> aObserved = new LinkedList<GameObject>();
 	
 	/**
 	 * Ticks all observed items
@@ -31,7 +31,7 @@ public class GameObjectObserver  {
 	 * @pre aObject != null
 	 * @param aObject AbstractGameObject to be added
 	 */
-	public static void add(AbstractGameObject aObject) {
+	public static void add(GameObject aObject) {
 		assert aObject != null;
 		aObserved.add(aObject);
 	}
@@ -40,7 +40,7 @@ public class GameObjectObserver  {
 	 * @param aObject AbstractGameObject to be added
 	 * @return false if aObject was being observed
 	 */
-	public static boolean remove(AbstractGameObject aObject) {
+	public static boolean remove(GameObject aObject) {
 		assert aObject != null;
 		return aObserved.remove(aObject);
 	}
@@ -50,15 +50,14 @@ public class GameObjectObserver  {
 	 * @param pType type to search for
 	 * @return all AbstractGameObject's with aType = pType
 	 */
-	public static LinkedList<AbstractGameObject> getByObjType(AbstractGameObject.ObjType pType) {
+	public static LinkedList<GameObject> getByObjType(GameObject.ObjType pType) {
 		assert pType != null;
 		
-		LinkedList<AbstractGameObject> toReturn = new LinkedList<AbstractGameObject>();
+		LinkedList<GameObject> toReturn = new LinkedList<GameObject>();
 		
 		aObserved.forEach(item -> {
 			if (item.aType == pType) toReturn.add(item);
 		});
-		
 		return toReturn;
 	}
 
