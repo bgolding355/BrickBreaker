@@ -1,15 +1,17 @@
 package game;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 abstract class AbstractGameObject {
 	protected int x, y, velX, velY;
 	protected ObjType aType;
+	protected int aWidth, aHeight;
 	
 	public enum ObjType {
 		PLAYER,
-		BASIC_ENEMY
+		BALL
 	}
 	
 	/**
@@ -50,4 +52,12 @@ abstract class AbstractGameObject {
 	 * @param pEvent event which occurred
 	 */
 	public abstract void keyReleaseEvent(KeyEvent pEvent);
+	
+	/**
+	 * Method which returns the bounds of this. To be used for collision detection.
+	 * @return rectangle around this
+	 */
+	public Rectangle getBounds() {
+		return new Rectangle(this.x, this.y, this.aWidth, this.aHeight);
+	}
 }

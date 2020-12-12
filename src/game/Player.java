@@ -2,9 +2,11 @@ package game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.util.AbstractMap;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 public class Player extends AbstractGameObject {
@@ -15,13 +17,12 @@ public class Player extends AbstractGameObject {
 
 	public Player(int pX, int pY, ObjType aType) {
 		super(pX, pY, aType);
+		this.aWidth = PLAYER_WIDTH;
+		this.aHeight = PLAYER_HEIGHT;
 	}
 
 	@Override
 	public void tick() {
-		
-		System.out.println(velX);
-		
 		x += Game.bound(velX, -1*MAX_VELOCITY, MAX_VELOCITY);
 		this.x = Game.bound(x, 0, Game.WIDTH - 60);
 	}
@@ -29,7 +30,7 @@ public class Player extends AbstractGameObject {
 	@Override
 	public void render(Graphics pGraphics) {
 		pGraphics.setColor(Color.white);
-		pGraphics.fillRect(x, y, PLAYER_WIDTH, PLAYER_HEIGHT);
+		pGraphics.fillRect(x, y, this.aWidth, this.aHeight);
 	}
 
 	@Override

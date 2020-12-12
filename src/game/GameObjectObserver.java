@@ -6,13 +6,14 @@ import java.util.LinkedList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class GameObjectObserver {
+public class GameObjectObserver  {
 	private static LinkedList<AbstractGameObject> aObserved = new LinkedList<AbstractGameObject>();
 	
 	/**
 	 * Ticks all observed items
 	 */
 	public static void tick() {
+		Collisions.checkAllCollisions();
 		aObserved.forEach(item -> item.tick());
 	}
 	
@@ -60,7 +61,7 @@ public class GameObjectObserver {
 		
 		return toReturn;
 	}
-	
+
 	/**
 	 * Performs pEvent on this
 	 * 

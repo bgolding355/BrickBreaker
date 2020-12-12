@@ -28,7 +28,7 @@ public class Game extends Canvas implements Runnable {
 	 */
 	private void gameSetup(){
 		GameObjectObserver.add(new Player(WIDTH/2,HEIGHT-42, AbstractGameObject.ObjType.PLAYER));
-		GameObjectObserver.add(new BasicEnemy(100,100,AbstractGameObject.ObjType.BASIC_ENEMY));
+		GameObjectObserver.add(new Ball(100,100,AbstractGameObject.ObjType.BALL));
 	}
 
 	public synchronized void start() {
@@ -108,7 +108,6 @@ public class Game extends Canvas implements Runnable {
 			frames++;
 
 			if (System.currentTimeMillis() - timer > 1000) {
-//				System.out.println(String.format("FPS: %d", frames));
 				timer += 1000;
 				frames = 0;
 			}
