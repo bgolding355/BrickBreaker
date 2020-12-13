@@ -12,6 +12,8 @@ public enum Collisions {
 					if (ball.getBounds().intersects(brick.getBounds())) {
 						ball.velY *= -1;
 						Observer.remove(brick);
+						Game.playSound("resources/sound/collision.wav");
+						HUD.increment();
 					}
 				}
 			}
@@ -25,6 +27,7 @@ public enum Collisions {
 				for (GameObject player : Observer.getByObjType(GameObject.ObjType.PLAYER)) {
 					if (ball.getBounds().intersects(player.getBounds())) {
 						ball.velY *= -1;
+						Game.playSound("resources/sound/collision.wav");
 					}
 				}
 			}
@@ -35,6 +38,7 @@ public enum Collisions {
 		void action() {
 			if (Observer.getByObjType(GameObject.ObjType.BALL).stream().anyMatch(ball -> ball.y >= Game.HEIGHT - 32)) {
 				GameState.setState(GameState.BALL_HIT_GROUND);
+				Game.playSound("resources/sound/game_over.wav");
 			}
 		}
 	},
@@ -42,10 +46,13 @@ public enum Collisions {
 		@Override
 		void action() {
 			Observer.getByObjType(GameObject.ObjType.BALL).forEach(ball -> {
-				if (ball.y <= 0 || ball.y >= Game.HEIGHT - 32)
-					ball.velY *= -1;
-				if (ball.x <= 0 || ball.x >= Game.WIDTH - 32)
-					ball.velX *= -1;
+				if (ball.y <= 0) {
+					ball.velY *= -1;	
+					Game.playSound("resources/sound/collision.wav");				
+				} else if (ball.x <= 0 || ball.x >= Game.WIDTH - 32) {
+					ball.velX *= -1;	
+					Game.playSound("resources/sound/collision.wav");				
+				}
 			});
 		}
 	};

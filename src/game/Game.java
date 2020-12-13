@@ -4,12 +4,17 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.io.File;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 6307620746112193723L;
 	protected static final int WIDTH = 640;
-	protected static final int HEIGHT = 480;
-	protected static final int BRICK_ROWS = 4;
+	protected static final int HEIGHT = 820;
+	protected static final int BRICK_ROWS = 8;
 	private static final String GAME_HEADER = "BrickBreaker";
 
 	private Thread aThread; // Single threaded game
@@ -79,6 +84,7 @@ public class Game extends Canvas implements Runnable {
 
 			Observer.render(g);
 			GameState.getCurrentState().graphicsAction(g);
+			HUD.displayHUD(g);
 			g.dispose();
 			bs.show();
 		}
@@ -111,11 +117,28 @@ public class Game extends Canvas implements Runnable {
 			frames++;
 
 			if (System.currentTimeMillis() - timer > 1000) {
-				timer += 200;
+				timer += 100;
 				frames = 0;
 			}
 		}
 		stop();
+	}
+	
+	/**
+	 * Method for playing sound. Taken from https://stackoverflow.com/a/37693420 with only
+	 * minor adjustments
+	 * @param soundFile sound to be played
+	 */
+	public static void playSound(String soundFile) {
+	    File f = new File("./" + soundFile);
+	    try {
+		    AudioInputStream audioIn = AudioSystem.getAudioInputStream(f.toURI().toURL());  
+		    Clip clip = AudioSystem.getClip();
+		    clip.open(audioIn);
+		    clip.start();
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    }
 	}
 
 	public static void main(String[] args) {

@@ -43,7 +43,7 @@ public class Brick extends GameObject {
 	 */
 	public static int populateWithBricks(int pRows) {
 		int curX = BRICK_OFFSET;
-		int curY = BRICK_OFFSET;
+		int curY = BRICK_OFFSET+2*BRICK_HEIGHT;
 		
 		for (int i = 0; i < pRows; i++) {
 			while (curX + BRICK_WIDTH < Game.WIDTH + BRICK_OFFSET) {

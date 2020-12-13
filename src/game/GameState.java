@@ -16,9 +16,16 @@ public enum GameState {
 
 		@Override
 		void graphicsAction(Graphics pGraphics) {
+			
 			pGraphics.setColor(Color.white);
 			pGraphics.drawString("Welcome to BrickBreader press 'Space' to start", 
 					Game.WIDTH/2-150, Game.HEIGHT / 2);
+			
+			//Only play sound once
+			if (stateChange) {
+				stateChange = false;
+				Game.playSound("resources/sound/game_start.wav");
+			}
 		}
 
 		@Override
@@ -37,8 +44,11 @@ public enum GameState {
 			if (stateChange) {
 				stateChange = false;
 				
+				//Reset Score
+				HUD.resetDestroyed();
+				
 				//Adding ball
-				Observer.add(new Ball(Game.WIDTH/2, Game.BRICK_ROWS*(Brick.BRICK_HEIGHT 
+				Observer.add(new Ball(Game.WIDTH/2, 2*Game.BRICK_ROWS*(Brick.BRICK_HEIGHT 
 						+ Brick.BRICK_OFFSET), GameObject.ObjType.BALL));
 				
 				//Removing old bricks
@@ -105,7 +115,7 @@ public enum GameState {
 	};
 
 	private static GameState currentState = INITIAL_STATE;
-	private static boolean stateChange = false;
+	private static boolean stateChange = true;
 
 	public static void setState(GameState g) {
 		currentState = g;
