@@ -117,28 +117,29 @@ public class Game extends Canvas implements Runnable {
 			frames++;
 
 			if (System.currentTimeMillis() - timer > 1000) {
-				timer += 100;
+				timer += 1000;
 				frames = 0;
 			}
 		}
 		stop();
 	}
-	
+
 	/**
-	 * Method for playing sound. Taken from https://stackoverflow.com/a/37693420 with only
-	 * minor adjustments
+	 * Method for playing sound 
 	 * @param soundFile sound to be played
 	 */
-	public static void playSound(String soundFile) {
-	    File f = new File("./" + soundFile);
-	    try {
-		    AudioInputStream audioIn = AudioSystem.getAudioInputStream(f.toURI().toURL());  
-		    Clip clip = AudioSystem.getClip();
-		    clip.open(audioIn);
-		    clip.start();
-	    } catch (Exception e) {
-	    	e.printStackTrace();
-	    }
+	public static void playSound(String soundFile) {		
+		new Thread(() -> {
+		    File f = new File("./" + soundFile);
+		    try {
+			    AudioInputStream audioIn = AudioSystem.getAudioInputStream(f.toURI().toURL());  
+			    Clip clip = AudioSystem.getClip();
+			    clip.open(audioIn);
+			    clip.start();
+		    } catch (Exception e) {
+		    	e.printStackTrace();
+		    }
+		}).start();
 	}
 
 	public static void main(String[] args) {

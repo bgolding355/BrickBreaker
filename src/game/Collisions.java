@@ -21,13 +21,34 @@ public enum Collisions {
 	},
 
 	BALL_PLAYER {
+		long lastBallPlayerCollision = 0;
+
 		@Override
-		void action() {			
+		void action() {
 			for (GameObject ball : Observer.getByObjType(GameObject.ObjType.BALL)) {
 				for (GameObject player : Observer.getByObjType(GameObject.ObjType.PLAYER)) {
 					if (ball.getBounds().intersects(player.getBounds())) {
-						ball.velY *= -1;
 						Game.playSound("resources/sound/collision.wav");
+
+						/**
+						 * Since the player can move to trigger this collision multiple times in a short
+						 * time. A timer is added so that the collision can be triggered only once every
+						 * second.
+						 */
+						if (System.currentTimeMillis() - lastBallPlayerCollision > 1000) {
+
+							lastBallPlayerCollision = System.currentTimeMillis();
+							ball.velY *= -1;
+
+							int oldRange = 60;
+							int newRange = Ball.MAX_BALL_SPEED - Ball.MIN_BALL_SPEED;
+							ball.velX = (((ball.x - player.x) * newRange) / oldRange) 
+									+ Ball.MIN_BALL_SPEED - Ball.MAX_BALL_SPEED/2;
+							
+							System.out.println(ball.x + "||" + player.x 
+									+ "::" + ball.velX);
+
+						}
 					}
 				}
 			}
@@ -37,8 +58,8 @@ public enum Collisions {
 		@Override
 		void action() {
 			if (Observer.getByObjType(GameObject.ObjType.BALL).stream().anyMatch(ball -> ball.y >= Game.HEIGHT - 32)) {
-				GameState.setState(GameState.BALL_HIT_GROUND);
 				Game.playSound("resources/sound/game_over.wav");
+				GameState.setState(GameState.BALL_HIT_GROUND);
 			}
 		}
 	},
@@ -47,11 +68,11 @@ public enum Collisions {
 		void action() {
 			Observer.getByObjType(GameObject.ObjType.BALL).forEach(ball -> {
 				if (ball.y <= 0) {
-					ball.velY *= -1;	
-					Game.playSound("resources/sound/collision.wav");				
+					ball.velY *= -1;
+					Game.playSound("resources/sound/collision.wav");
 				} else if (ball.x <= 0 || ball.x >= Game.WIDTH - 32) {
-					ball.velX *= -1;	
-					Game.playSound("resources/sound/collision.wav");				
+					ball.velX *= -1;
+					Game.playSound("resources/sound/collision.wav");
 				}
 			});
 		}

@@ -9,19 +9,20 @@ import game.GameObject.ObjType;
 
 public enum GameState {
 	INITIAL_STATE {
-		
+
 		// No game action
 		@Override
-		void gameAction() { }
+		void gameAction() {
+		}
 
 		@Override
 		void graphicsAction(Graphics pGraphics) {
-			
+
 			pGraphics.setColor(Color.white);
-			pGraphics.drawString("Welcome to BrickBreader press 'Space' to start", 
-					Game.WIDTH/2-150, Game.HEIGHT / 2);
-			
-			//Only play sound once
+			pGraphics.drawString("Welcome to BrickBreader press 'Space' to start", Game.WIDTH / 2 - 150,
+					Game.HEIGHT / 2);
+
+			// Only play sound once
 			if (stateChange) {
 				stateChange = false;
 				Game.playSound("resources/sound/game_start.wav");
@@ -34,39 +35,44 @@ public enum GameState {
 				stateChange = true;
 				GameState.setState(GameState.PLAYING);
 			}
-		
+
 		}
 	},
 	PLAYING {
-		
+
 		@Override
 		void gameAction() {
 			if (stateChange) {
 				stateChange = false;
-				
-				//Reset Score
+
+				// Reset Score
 				HUD.resetDestroyed();
-				
-				//Adding ball
-				Observer.add(new Ball(Game.WIDTH/2, 2*Game.BRICK_ROWS*(Brick.BRICK_HEIGHT 
-						+ Brick.BRICK_OFFSET), GameObject.ObjType.BALL));
-				
-				//Removing old bricks
+
+				// Adding ball
+				Observer.add(new Ball(Game.WIDTH / 2, 2 * Game.BRICK_ROWS * (Brick.BRICK_HEIGHT + Brick.BRICK_OFFSET),
+						GameObject.ObjType.BALL));
+
+				// Removing old bricks
 				Observer.getByObjType(GameObject.ObjType.BRICK).forEach(brick -> {
 					Observer.remove(brick);
 				});
-				
-				//Adding new bricks
+
+				// Adding new bricks
 				Brick.populateWithBricks(Game.BRICK_ROWS);
-				
+
 			}
 		}
 
 		/**
 		 * Neither is needed while game is playing
 		 */
-		@Override void graphicsAction(Graphics pGraphics) {}
-		@Override void keyPressEvent(KeyEvent pEvent) {}
+		@Override
+		void graphicsAction(Graphics pGraphics) {
+		}
+
+		@Override
+		void keyPressEvent(KeyEvent pEvent) {
+		}
 	},
 	BALL_HIT_GROUND {
 		@Override
@@ -79,7 +85,12 @@ public enum GameState {
 		@Override
 		void graphicsAction(Graphics pGraphics) {
 			pGraphics.setColor(Color.white);
-			pGraphics.drawString("You Lose, Press 'Space' to try again", Game.WIDTH/2-110, Game.HEIGHT / 2);
+			pGraphics.drawString(
+					String.format("You Lost after destroying %d bricks " 
+							+ "with your current best being %d bricks",
+							HUD.getCurrentDestroyed(), HUD.getMaxDestroyed()),
+					Game.WIDTH / 2 - 230, Game.HEIGHT / 2);
+			pGraphics.drawString("Press 'Space' to try again", Game.WIDTH /2 - 85, Game.HEIGHT / 2 + 15);
 		}
 
 		@Override
@@ -87,22 +98,24 @@ public enum GameState {
 			if (pEvent.getKeyCode() == KeyEvent.VK_SPACE) {
 				stateChange = true;
 				GameState.setState(GameState.PLAYING);
-			}		
+			}
 		}
 	},
 	NO_BRICKS {
 		@Override
 		void gameAction() {
-			//Removes Everything from the screen
+			// Removes Everything from the screen
 			for (GameObject.ObjType t : GameObject.ObjType.values()) {
 				Observer.getByObjType(t).forEach(item -> Observer.remove(item));
 			}
+			// play victory sound
+			Game.playSound("resources/sound/victory.wav");
 		}
 
 		@Override
 		void graphicsAction(Graphics pGraphics) {
 			pGraphics.setColor(Color.white);
-			pGraphics.drawString("You Win, Press 'Space' to play again", Game.WIDTH/2-110, Game.HEIGHT / 2);
+			pGraphics.drawString("You Win, Press 'Space' to play again", Game.WIDTH / 2 - 110, Game.HEIGHT / 2);
 		}
 
 		@Override
@@ -120,15 +133,15 @@ public enum GameState {
 	public static void setState(GameState g) {
 		currentState = g;
 	}
-	
+
 	public static GameState getCurrentState() {
 		return currentState;
 	}
-	
+
 	abstract void gameAction();
+
 	abstract void graphicsAction(Graphics pGraphics);
+
 	abstract void keyPressEvent(KeyEvent pEvent);
-
-
 
 }
