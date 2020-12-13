@@ -1,6 +1,7 @@
 package game;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
@@ -22,9 +23,9 @@ public class Brick extends GameObject {
 	}
 
 	@Override
-	public void render() {
-		Game.getGraphic().setColor(new Color(aRGBColours[0], aRGBColours[1], aRGBColours[2]));
-		Game.getGraphic().fillRect(this.x, this.y, BRICK_WIDTH, BRICK_HEIGHT);
+	public void render(Graphics pGraphics) {
+		pGraphics.setColor(new Color(aRGBColours[0], aRGBColours[1], aRGBColours[2]));
+		pGraphics.fillRect(this.x, this.y, BRICK_WIDTH, BRICK_HEIGHT);
 	}
 
 	/**

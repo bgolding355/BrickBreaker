@@ -1,5 +1,6 @@
 package game;
 
+import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
@@ -36,7 +37,7 @@ abstract class GameObject {
 	 * @param pGraphics graphics to be rendered
 	 * Renders all observed items
 	 */
-	public abstract void render();
+	public abstract void render(Graphics pGraphics);
 	
 	/**
 	 * Performs pEvent on this

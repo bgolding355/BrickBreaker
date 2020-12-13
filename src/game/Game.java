@@ -10,7 +10,6 @@ public class Game extends Canvas implements Runnable {
 	protected static final int WIDTH = 640;
 	protected static final int HEIGHT = 480;
 	protected static final int BRICK_ROWS = 4;
-	private static Graphics aGraphics;
 	private static final String GAME_HEADER = "BrickBreaker";
 
 	private Thread aThread; // Single threaded game
@@ -28,10 +27,7 @@ public class Game extends Canvas implements Runnable {
 	 * Helper method which sets up game
 	 */
 	private void gameSetup() {
-		Observer.add(new Player(WIDTH / 2, HEIGHT - 42, GameObject.ObjType.PLAYER));
-		Observer.add(new Ball(WIDTH/2, BRICK_ROWS*(Brick.BRICK_HEIGHT 
-				+ Brick.BRICK_OFFSET), GameObject.ObjType.BALL));
-		Brick.populateWithBricks(BRICK_ROWS);
+		Observer.add(new Player(WIDTH / 2, HEIGHT - 60, GameObject.ObjType.PLAYER));
 	}
 
 	public synchronized void start() {
@@ -77,13 +73,13 @@ public class Game extends Canvas implements Runnable {
 		if (bs == null) {
 			this.createBufferStrategy(3);
 		} else {
-			aGraphics = bs.getDrawGraphics();
-			aGraphics.setColor(Color.black);
-			aGraphics.fillRect(0, 0, WIDTH, HEIGHT);
+			Graphics g = bs.getDrawGraphics();
+			g.setColor(Color.black);
+			g.fillRect(0, 0, WIDTH, HEIGHT);
 
-			Observer.render();
-			GameState.getCurrentState().graphicsAction();
-			aGraphics.dispose();
+			Observer.render(g);
+			GameState.getCurrentState().graphicsAction(g);
+			g.dispose();
 			bs.show();
 		}
 	}
@@ -115,7 +111,7 @@ public class Game extends Canvas implements Runnable {
 			frames++;
 
 			if (System.currentTimeMillis() - timer > 1000) {
-				timer += 1000;
+				timer += 200;
 				frames = 0;
 			}
 		}
@@ -125,9 +121,5 @@ public class Game extends Canvas implements Runnable {
 	public static void main(String[] args) {
 		Game game = new Game();
 		game.run();
-	}
-
-	public static Graphics getGraphic() {
-		return aGraphics;
 	}
 }

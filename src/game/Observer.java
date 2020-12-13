@@ -1,5 +1,6 @@
 package game;
 
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 
@@ -17,8 +18,8 @@ public class Observer  {
 	 * @param pGraphics graphics to be rendered
 	 * Renders all observed items
 	 */
-	public static void render() {
-		aObserved.forEach(item -> item.render());
+	public static void render(Graphics pGraphics) {
+		aObserved.forEach(item -> item.render(pGraphics));
 	}
 	
 	/**

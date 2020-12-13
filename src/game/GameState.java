@@ -1,6 +1,7 @@
 package game;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
 
@@ -8,22 +9,25 @@ import game.GameObject.ObjType;
 
 public enum GameState {
 	INITIAL_STATE {
+		
+		// No game action
 		@Override
-		void gameAction() {
-			// TODO Auto-generated method stub
-
-		}
+		void gameAction() { }
 
 		@Override
-		void graphicsAction() {
-			// TODO Auto-generated method stub
-
+		void graphicsAction(Graphics pGraphics) {
+			pGraphics.setColor(Color.white);
+			pGraphics.drawString("Welcome to BrickBreader press 'Space' to start", 
+					Game.WIDTH/2-150, Game.HEIGHT / 2);
 		}
 
 		@Override
 		void keyPressEvent(KeyEvent pEvent) {
-			// TODO Auto-generated method stub
-			
+			if (pEvent.getKeyCode() == KeyEvent.VK_SPACE) {
+				stateChange = true;
+				GameState.setState(GameState.PLAYING);
+			}
+		
 		}
 	},
 	PLAYING {
@@ -48,32 +52,24 @@ public enum GameState {
 			}
 		}
 
-		@Override
-		void graphicsAction() {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		void keyPressEvent(KeyEvent pEvent) {
-			// TODO Auto-generated method stub
-			
-		}
+		/**
+		 * Neither is needed while game is playing
+		 */
+		@Override void graphicsAction(Graphics pGraphics) {}
+		@Override void keyPressEvent(KeyEvent pEvent) {}
 	},
 	BALL_HIT_GROUND {
 		@Override
 		void gameAction() {
-			Game.getGraphic().setColor(Color.white);
-			Game.getGraphic().drawString("You Lose, Press 'Space' to try again", Game.WIDTH / 2, Game.HEIGHT / 2);
 			Observer.getByObjType(ObjType.BALL).forEach(ball -> {
 				Observer.remove(ball);
 			});
 		}
 
 		@Override
-		void graphicsAction() {
-			Game.getGraphic().setColor(Color.white);
-			Game.getGraphic().drawString("You Lose, Press 'Space' to try again", Game.WIDTH/2-110, Game.HEIGHT / 2);
+		void graphicsAction(Graphics pGraphics) {
+			pGraphics.setColor(Color.white);
+			pGraphics.drawString("You Lose, Press 'Space' to try again", Game.WIDTH/2-110, Game.HEIGHT / 2);
 		}
 
 		@Override
@@ -94,9 +90,9 @@ public enum GameState {
 		}
 
 		@Override
-		void graphicsAction() {
-			Game.getGraphic().setColor(Color.white);
-			Game.getGraphic().drawString("You Win, Press 'Space' to play again", Game.WIDTH/2-110, Game.HEIGHT / 2);
+		void graphicsAction(Graphics pGraphics) {
+			pGraphics.setColor(Color.white);
+			pGraphics.drawString("You Win, Press 'Space' to play again", Game.WIDTH/2-110, Game.HEIGHT / 2);
 		}
 
 		@Override
@@ -120,7 +116,7 @@ public enum GameState {
 	}
 	
 	abstract void gameAction();
-	abstract void graphicsAction();
+	abstract void graphicsAction(Graphics pGraphics);
 	abstract void keyPressEvent(KeyEvent pEvent);
 
 

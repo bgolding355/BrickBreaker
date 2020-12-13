@@ -1,6 +1,7 @@
 package game;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 public class Player extends GameObject {
@@ -22,9 +23,9 @@ public class Player extends GameObject {
 	}
 
 	@Override
-	public void render() {
-		Game.getGraphic().setColor(Color.white);
-		Game.getGraphic().fillRect(x, y, this.aWidth, this.aHeight);
+	public void render(Graphics pGraphics) {
+		pGraphics.setColor(Color.white);
+		pGraphics.fillRect(x, y, this.aWidth, this.aHeight);
 	}
 
 	@Override
