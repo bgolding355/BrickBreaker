@@ -101,21 +101,19 @@ public enum GameState {
 			}
 		}
 	},
-	NO_BRICKS {
+	VICTORY {
 		@Override
 		void gameAction() {
 			// Removes Everything from the screen
 			for (GameObject.ObjType t : GameObject.ObjType.values()) {
 				Observer.getByObjType(t).forEach(item -> Observer.remove(item));
 			}
-			// play victory sound
-			Game.playSound("resources/sound/victory.wav");
 		}
 
 		@Override
 		void graphicsAction(Graphics pGraphics) {
 			pGraphics.setColor(Color.white);
-			pGraphics.drawString("You Win, Press 'Space' to play again", Game.WIDTH / 2 - 110, Game.HEIGHT / 2);
+			pGraphics.drawString("You Win, Press 'Space' to play again", Game.WIDTH / 2 - 112, Game.HEIGHT / 2);
 		}
 
 		@Override

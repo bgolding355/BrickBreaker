@@ -3,19 +3,19 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Ball extends GameObject{
 	
 	protected static final int BALL_DIAMETER = 20;
-	protected static final int DEFAULT_BALL_SPEED = 5;
-	protected static final int MIN_BALL_SPEED = 3;
-	protected static final int MAX_BALL_SPEED = 20;
+	protected static final int MIN_BALLX = 3;
+	protected static final int MAX_BALLX = 20;
+	private static final int INITIAL_BALL_SPEED = 6;
 	
 	public Ball(int pX, int pY, ObjType pType) {
 		super(pX, pY, pType);
-		
-		this.velX = DEFAULT_BALL_SPEED;
-		this.velY = DEFAULT_BALL_SPEED;
+		this.velX = (Math.random() > 0.5)? -1*INITIAL_BALL_SPEED: INITIAL_BALL_SPEED;
+		this.velY = INITIAL_BALL_SPEED;
 		this.aHeight = BALL_DIAMETER;
 		this.aWidth = BALL_DIAMETER;
 	}

@@ -16,7 +16,15 @@ public enum Collisions {
 						HUD.increment();
 					}
 				}
-			}
+			}	
+			/**
+			 * At the end if no blocks remain, triggering win condition
+			 */
+			if (Observer.getByObjType(GameObject.ObjType.BRICK).size() == 0 &&
+					GameState.getCurrentState() == GameState.PLAYING) {
+				Game.playSound("resources/sound/victory.wav");
+				GameState.setState(GameState.VICTORY);
+			}	
 		}
 	},
 
@@ -41,13 +49,9 @@ public enum Collisions {
 							ball.velY *= -1;
 
 							int oldRange = 60;
-							int newRange = Ball.MAX_BALL_SPEED - Ball.MIN_BALL_SPEED;
+							int newRange = Ball.MAX_BALLX - Ball.MIN_BALLX;
 							ball.velX = (((ball.x - player.x) * newRange) / oldRange) 
-									+ Ball.MIN_BALL_SPEED - Ball.MAX_BALL_SPEED/2;
-							
-							System.out.println(ball.x + "||" + player.x 
-									+ "::" + ball.velX);
-
+									+ Ball.MIN_BALLX - Ball.MAX_BALLX/2;
 						}
 					}
 				}
