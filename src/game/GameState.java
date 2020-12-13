@@ -113,7 +113,8 @@ public enum GameState {
 		@Override
 		void graphicsAction(Graphics pGraphics) {
 			pGraphics.setColor(Color.white);
-			pGraphics.drawString("You Win, Press 'Space' to play again", Game.WIDTH / 2 - 112, Game.HEIGHT / 2);
+			pGraphics.drawString("You Win, Press 'Space' to play again", 
+					Game.WIDTH / 2 - 112, Game.HEIGHT / 2);
 		}
 
 		@Override
