@@ -1,10 +1,7 @@
 package game;
 
-import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.LinkedList;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Observer  {
 	private static LinkedList<GameObject> aObserved = new LinkedList<GameObject>();
@@ -13,18 +10,15 @@ public class Observer  {
 	 * Ticks all observed items
 	 */
 	public static void tick() {
-		Collisions.checkAllCollisions();
 		aObserved.forEach(item -> item.tick());
 	}
 	
 	/**
 	 * @param pGraphics graphics to be rendered
-	 * @pre pGraphics != null
 	 * Renders all observed items
 	 */
-	public static void render(Graphics pGraphics) {
-		assert pGraphics != null;
-		aObserved.forEach(item -> item.render(pGraphics));
+	public static void render() {
+		aObserved.forEach(item -> item.render());
 	}
 	
 	/**

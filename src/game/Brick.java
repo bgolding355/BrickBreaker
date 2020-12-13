@@ -1,7 +1,6 @@
 package game;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
@@ -10,7 +9,7 @@ public class Brick extends GameObject {
 	protected static final int BRICK_HEIGHT = 25;
 	protected static final int BRICK_WIDTH = 60;
 	private final int[] aRGBColours = new int[3];
-	private static final int BRICK_OFFSET = 3; //Space between each brick
+	protected static final int BRICK_OFFSET = 3; //Space between each brick
 
 	public Brick(int pX, int pY, ObjType pType) {
 		super(pX, pY, pType);
@@ -23,9 +22,9 @@ public class Brick extends GameObject {
 	}
 
 	@Override
-	public void render(Graphics pGraphics) {
-		pGraphics.setColor(new Color(aRGBColours[0], aRGBColours[1], aRGBColours[2]));
-		pGraphics.fillRect(this.x, this.y, BRICK_WIDTH, BRICK_HEIGHT);
+	public void render() {
+		Game.getGraphic().setColor(new Color(aRGBColours[0], aRGBColours[1], aRGBColours[2]));
+		Game.getGraphic().fillRect(this.x, this.y, BRICK_WIDTH, BRICK_HEIGHT);
 	}
 
 	/**
@@ -39,8 +38,9 @@ public class Brick extends GameObject {
 	 * Given Game.WIDTH, BRICK.WIDTH, BRICK.HEIGHT, BRICK.BRICK_OFFSET, this
 	 * populates the game with some number of rows
 	 * @param pRows number of rows to add
+	 * @return the height of all rows
 	 */
-	public static void populateWithBricks(int pRows) {
+	public static int populateWithBricks(int pRows) {
 		int curX = BRICK_OFFSET;
 		int curY = BRICK_OFFSET;
 		
@@ -52,5 +52,6 @@ public class Brick extends GameObject {
 			curY += Brick.BRICK_HEIGHT + BRICK_OFFSET;
 			curX = Brick.BRICK_OFFSET;
 		}
+		return curY;
 	}
 }

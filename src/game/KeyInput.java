@@ -7,6 +7,7 @@ public class KeyInput extends KeyAdapter  {
 	
 	@Override
 	public void keyPressed(KeyEvent pEvent) {
+		GameState.getCurrentState().keyPressEvent(pEvent);
 		Observer.keyPressEvent(pEvent);
 	}
 	

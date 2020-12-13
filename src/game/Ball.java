@@ -1,14 +1,12 @@
  package game;
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 public class Ball extends GameObject{
 	
-	private static final int BALL_DIAMETER = 20;
-	private static final int BALL_SPEED = 5;
+	protected static final int BALL_DIAMETER = 20;
+	protected static final int BALL_SPEED = 5;
 	
 	public Ball(int pX, int pY, ObjType pType) {
 		super(pX, pY, pType);
@@ -26,9 +24,9 @@ public class Ball extends GameObject{
 	}
 
 	@Override
-	public void render(Graphics pGraphics) {
-		pGraphics.setColor(Color.red);
-		pGraphics.fillOval(this.x, this.y, BALL_DIAMETER, BALL_DIAMETER);
+	public void render() {
+		Game.getGraphic().setColor(Color.red);
+		Game.getGraphic().fillOval(this.x, this.y, BALL_DIAMETER, BALL_DIAMETER);
 	}
 
 	/**

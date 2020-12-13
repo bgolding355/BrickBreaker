@@ -1,13 +1,7 @@
 package game;
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
 
 public class Player extends GameObject {
 	private static final int PLAYER_WIDTH = 64;
@@ -28,9 +22,9 @@ public class Player extends GameObject {
 	}
 
 	@Override
-	public void render(Graphics pGraphics) {
-		pGraphics.setColor(Color.white);
-		pGraphics.fillRect(x, y, this.aWidth, this.aHeight);
+	public void render() {
+		Game.getGraphic().setColor(Color.white);
+		Game.getGraphic().fillRect(x, y, this.aWidth, this.aHeight);
 	}
 
 	@Override

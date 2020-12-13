@@ -34,7 +34,7 @@ public enum Collisions {
 		@Override
 		void action() {
 			if (Observer.getByObjType(GameObject.ObjType.BALL).stream().anyMatch(ball -> ball.y >= Game.HEIGHT - 32)) {
-				System.out.println("Ball Collided with Floor");
+				GameState.setState(GameState.BALL_HIT_GROUND);
 			}
 		}
 	},
