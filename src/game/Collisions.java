@@ -5,15 +5,25 @@ package game;
  */
 public enum Collisions {
 	BALL_BRICK {
+		long lastBallBrickCollision = 0;
+		
 		@Override
 		void action() {
 			for (GameObject ball : Observer.getByObjType(GameObject.ObjType.BALL)) {
 				for (GameObject brick : Observer.getByObjType(GameObject.ObjType.BRICK)) {
 					if (ball.getBounds().intersects(brick.getBounds())) {
-						ball.velY *= -1;
 						Observer.remove(brick);
-						Game.playSound("resources/sound/collision.wav");
 						HUD.increment();
+						
+						/**
+						 * Since the ball can collide with multiple bricks at the same time,
+						 * velY + sound should only be played once
+						 */
+						if (System.currentTimeMillis() - lastBallBrickCollision > 100) { 
+							ball.velY *= -1;
+							Game.playSound("resources/sound/collision.wav");
+						}
+						
 					}
 				}
 			}	
