@@ -24,7 +24,7 @@ public enum GameState {
 			// Only play sound once
 			if (stateChange) {
 				stateChange = false;
-				Game.playSound("resources/sound/game_start.wav");
+				Game.playSound("game_start.wav");
 			}
 		}
 

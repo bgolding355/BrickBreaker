@@ -4,7 +4,9 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
-import java.io.File;
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.net.URL;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -118,7 +120,7 @@ public class Game extends Canvas implements Runnable {
 
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-				//System.out.println(String.format("FPS: %d", frames)); //Uncomment to get FPS
+				// System.out.println(String.format("FPS: %d", frames)); //Uncomment to get FPS
 				frames = 0;
 			}
 		}
@@ -126,20 +128,23 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	/**
-	 * Method for playing sound 
+	 * Method for playing sound
+	 * 
 	 * @param soundFile sound to be played
 	 */
-	public static void playSound(String soundFile) {		
+	public static void playSound(String soundFile) {
 		new Thread(() -> {
-		    File f = new File("./" + soundFile);
-		    try {
-			    AudioInputStream audioIn = AudioSystem.getAudioInputStream(f.toURI().toURL());  
-			    Clip clip = AudioSystem.getClip();
-			    clip.open(audioIn);
-			    clip.start();
-		    } catch (Exception e) {
-		    	e.printStackTrace();
-		    }
+			try {
+				AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+						new BufferedInputStream(Game.class.getResourceAsStream("/" + soundFile))
+					);
+				
+				Clip clip = AudioSystem.getClip();
+				clip.open(inputStream);
+				clip.start();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}).start();
 	}
 

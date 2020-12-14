@@ -19,9 +19,9 @@ public enum Collisions {
 						 * Since the ball can collide with multiple bricks at the same time,
 						 * velY + sound should only be played once
 						 */
-						if (System.currentTimeMillis() - lastBallBrickCollision > 100) { 
+						if (System.currentTimeMillis() - lastBallBrickCollision > 200) { 
 							ball.velY *= -1;
-							Game.playSound("resources/sound/collision.wav");
+							Game.playSound("collision.wav");
 						}
 						
 					}
@@ -32,7 +32,7 @@ public enum Collisions {
 			 */
 			if (Observer.getByObjType(GameObject.ObjType.BRICK).size() == 0 &&
 					GameState.getCurrentState() == GameState.PLAYING) {
-				Game.playSound("resources/sound/victory.wav");
+				Game.playSound("victory.wav");
 				GameState.setState(GameState.VICTORY);
 			}	
 		}
@@ -46,7 +46,7 @@ public enum Collisions {
 			for (GameObject ball : Observer.getByObjType(GameObject.ObjType.BALL)) {
 				for (GameObject player : Observer.getByObjType(GameObject.ObjType.PLAYER)) {
 					if (ball.getBounds().intersects(player.getBounds())) {
-						Game.playSound("resources/sound/collision.wav");
+						Game.playSound("collision.wav");
 
 						/**
 						 * Since the player can move to trigger this collision multiple times in a short
@@ -72,7 +72,7 @@ public enum Collisions {
 		@Override
 		void action() {
 			if (Observer.getByObjType(GameObject.ObjType.BALL).stream().anyMatch(ball -> ball.y >= Game.HEIGHT - 32)) {
-				Game.playSound("resources/sound/game_over.wav");
+				Game.playSound("game_over.wav");
 				GameState.setState(GameState.BALL_HIT_GROUND);
 			}
 		}
@@ -83,10 +83,10 @@ public enum Collisions {
 			Observer.getByObjType(GameObject.ObjType.BALL).forEach(ball -> {
 				if (ball.y <= 0) {
 					ball.velY *= -1;
-					Game.playSound("resources/sound/collision.wav");
+					Game.playSound("collision.wav");
 				} else if (ball.x <= 0 || ball.x >= Game.WIDTH - 32) {
 					ball.velX *= -1;
-					Game.playSound("resources/sound/collision.wav");
+					Game.playSound("collision.wav");
 				}
 			});
 		}
